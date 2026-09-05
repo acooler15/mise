@@ -1031,6 +1031,8 @@ mod tests {
             undoes: None,
             applied: None,
             affected: vec![],
+            sources: vec![],
+            directories: vec![],
             message: None,
             journal: vec![],
         });
