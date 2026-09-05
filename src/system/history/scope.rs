@@ -40,6 +40,9 @@ struct Writer {
     _lock: fslock::LockFile,
     before: Option<(u64, String)>,
     pending: Pending,
+    /// Paths the outcome capture reads live and promotes (the affected
+    /// paths of a rollback, undo, or apply).
+    promote: Vec<PathBuf>,
 }
 
 type Shared = Arc<Mutex<Writer>>;
@@ -157,6 +160,54 @@ impl OperationScope {
             Some(summary),
         );
         result
+    }
+
+    /// Changes the pending outcome record (its `to`, `undoes`, `affected`,
+    /// message) before it is written.
+    pub(crate) fn with_operation(&self, f: impl FnOnce(&mut Operation)) {
+        if let Some(shared) = &self.0 {
+            let mut writer = lock_unpoisoned(shared);
+            f(writer.operation_mut());
+            if let Err(err) = writer.write_pending() {
+                warn!("history: could not persist the operation record: {err:#}");
+            }
+        }
+    }
+
+    /// The protective checkpoint this operation took, if any.
+    pub(crate) fn before(&self) -> Option<(u64, String)> {
+        self.0
+            .as_ref()
+            .and_then(|shared| lock_unpoisoned(shared).before.clone())
+    }
+
+    /// Retakes the protective checkpoint, replacing the earlier one, when
+    /// files changed between it and the verified plan.
+    pub(crate) fn recapture_before(&self) -> Result<()> {
+        let Some(shared) = &self.0 else {
+            return Ok(());
+        };
+        let mut writer = lock_unpoisoned(shared);
+        let previous = writer.before.take();
+        let id = {
+            let _store_lock = writer.store.lock()?;
+            writer.store.reserve_id()?
+        };
+        writer.capture_before(id);
+        if let Some((old_id, _)) = previous {
+            let _store_lock = writer.store.lock()?;
+            writer.store.remove(old_id)?;
+        }
+        Ok(())
+    }
+
+    /// Marks paths the outcome capture reads live and promotes.
+    pub(crate) fn promote(&self, paths: &[PathBuf]) {
+        if let Some(shared) = &self.0 {
+            lock_unpoisoned(shared)
+                .promote
+                .extend(paths.iter().cloned());
+        }
     }
 
     /// Captures the outcome and marks the operation completed, or failed
@@ -277,6 +328,7 @@ impl Writer {
             _lock: lock,
             before: None,
             pending,
+            promote: vec![],
         };
         writer.capture_before(before_id);
         Ok(writer)
@@ -392,6 +444,7 @@ impl Writer {
         draft.uuid = Some(checkpoint.uuid.clone());
         draft.operation = Some(operation.clone());
         draft.blobs = self.pending.blobs.clone();
+        draft.explicit_paths = self.promote.clone();
         let outcome = self
             .store
             .attempt_locked(&self.tracked, draft, Some(self.pending.id))?;
