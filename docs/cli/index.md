@@ -128,6 +128,7 @@
 - [`mise bootstrap secrets status [-J --json] [--missing]`](/cli/bootstrap/secrets/status.md)
 - [`mise bootstrap services <SUBCOMMAND>`](/cli/bootstrap/services.md)
 - [`mise bootstrap services apply [-n --dry-run] [-y --yes]`](/cli/bootstrap/services/apply.md)
+- [`mise bootstrap services remove [-n --dry-run] <NAME>`](/cli/bootstrap/services/remove.md)
 - [`mise bootstrap services status [-J --json] [--missing]`](/cli/bootstrap/services/status.md)
 - [`mise bootstrap status [FLAGS]`](/cli/bootstrap/status.md)
 - [`mise bootstrap systemd apply [-n --dry-run] [-y --yes]`](/cli/bootstrap/systemd/apply.md)

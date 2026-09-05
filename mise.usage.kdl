@@ -409,8 +409,9 @@ Runs the bootstrap steps for the current config in order:
 2. Install built-in-manager entries from `[bootstrap.packages]`
 3. `mise bootstrap files apply` — converge `[bootstrap.files]` and
    `[bootstrap.directories]`
-4. `mise bootstrap services apply` — converge `[bootstrap.services]`
-   systemd system services (Linux)
+4. `mise bootstrap services apply` — converge `[bootstrap.services]`:
+   systemd system services (Linux) and user-scope services on every
+   platform (those with `requires_tools = true` converge after step 14)
 5. `mise bootstrap firewall apply` — converge `[bootstrap.linux.firewall]`
    host firewall policy and rules (Linux)
 6. `mise bootstrap compose apply` — converge `[bootstrap.compose]`
@@ -1347,14 +1348,34 @@ Defaults to `~/.local/bin/mise`; pass `--install-mise=<PATH>` for another path.
             flag "-h --help" help="Print help" action=help builtin=#true
         }
     }
-    cmd services subcommand_required=#true help="Manage Linux system services from `[bootstrap.services]`" effect=read {
+    cmd services subcommand_required=#true help="Manage services from `[bootstrap.services]`" effect=read {
+        long_help #"""
+Manage services from `[bootstrap.services]`
+
+System-scope entries (the default) converge existing Linux systemd system
+units. `scope = "user"` entries are services mise defines for the current
+user on every platform: a systemd user unit on Linux, a LaunchAgent on
+macOS, a Scheduled Task on Windows.
+"""#
         flag "-h --help" help="Print help" action=help builtin=#true
-        cmd apply help="Apply configured Linux system service state" effect=destructive {
+        cmd apply help="Apply configured service state (system and user scope)" effect=destructive {
             flag "-n --dry-run" help="Print what would change without changing anything"
             flag "-y --yes" help="Skip the confirmation prompt"
             flag "-h --help" help="Print help" action=help builtin=#true
         }
-        cmd status help="Show configured Linux system service state" effect=read {
+        cmd remove help="Remove an installed user-scope service, declared or not" effect=destructive {
+            long_help #"""
+Remove an installed user-scope service, declared or not
+
+Deleting a `scope = "user"` declaration leaves its installed unit, agent,
+or task in place; this removes it once. The next `mise bootstrap`
+recreates it if it is still declared.
+"""#
+            flag "-n --dry-run" help="Print what would change without changing anything"
+            flag "-h --help" help="Print help" action=help builtin=#true
+            arg <NAME> help="The service name as declared in `[bootstrap.services]`"
+        }
+        cmd status help="Show configured service state (system and user scope)" effect=read {
             flag "-J --json" help="Output in JSON format"
             flag --missing help="Exit with code 1 when any service is not converged"
             flag "-h --help" help="Print help" action=help builtin=#true

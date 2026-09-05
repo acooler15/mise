@@ -398,13 +398,16 @@ Inspect bootstrap secret inputs without revealing their values
 Show whether declared bootstrap secret inputs are available
 .TP
 \fBbootstrap services\fR
-Manage Linux system services from `[bootstrap.services]`
+Manage services from `[bootstrap.services]`
 .TP
 \fBbootstrap services apply\fR
-Apply configured Linux system service state
+Apply configured service state (system and user scope)
+.TP
+\fBbootstrap services remove\fR
+Remove an installed user\-scope service, declared or not
 .TP
 \fBbootstrap services status\fR
-Show configured Linux system service state
+Show configured service state (system and user scope)
 .TP
 \fBbootstrap status\fR
 Show the aggregate bootstrap status
@@ -1094,8 +1097,9 @@ Runs the bootstrap steps for the current config in order:
 2. Install built\-in\-manager entries from `[bootstrap.packages]`
 3. `mise bootstrap files apply` — converge `[bootstrap.files]` and
    `[bootstrap.directories]`
-4. `mise bootstrap services apply` — converge `[bootstrap.services]`
-   systemd system services (Linux)
+4. `mise bootstrap services apply` — converge `[bootstrap.services]`:
+   systemd system services (Linux) and user\-scope services on every
+   platform (those with `requires_tools = true` converge after step 14)
 5. `mise bootstrap firewall apply` — converge `[bootstrap.linux.firewall]`
    host firewall policy and rules (Linux)
 6. `mise bootstrap compose apply` — converge `[bootstrap.compose]`
@@ -2612,7 +2616,12 @@ Exit with code 1 if a declared secret input is unavailable
 \fB\-h, \-\-help\fR
 Print help
 .SH "MISE BOOTSTRAP SERVICES"
-Manage Linux system services from `[bootstrap.services]`
+Manage services from `[bootstrap.services]`
+
+System\-scope entries (the default) converge existing Linux systemd system
+units. `scope = "user"` entries are services mise defines for the current
+user on every platform: a systemd user unit on Linux, a LaunchAgent on
+macOS, a Scheduled Task on Windows.
 .PP
 \fBUsage:\fR mise bootstrap services [OPTIONS] <COMMAND>
 .PP
@@ -2622,7 +2631,7 @@ Manage Linux system services from `[bootstrap.services]`
 \fB\-h, \-\-help\fR
 Print help
 .SH "MISE BOOTSTRAP SERVICES APPLY"
-Apply configured Linux system service state
+Apply configured service state (system and user scope)
 .PP
 \fBUsage:\fR mise bootstrap services apply [OPTIONS]
 .PP
@@ -2637,8 +2646,30 @@ Skip the confirmation prompt
 .TP
 \fB\-h, \-\-help\fR
 Print help
+.SH "MISE BOOTSTRAP SERVICES REMOVE"
+Remove an installed user\-scope service, declared or not
+
+Deleting a `scope = "user"` declaration leaves its installed unit, agent,
+or task in place; this removes it once. The next `mise bootstrap`
+recreates it if it is still declared.
+.PP
+\fBUsage:\fR mise bootstrap services remove [OPTIONS] <NAME>
+.PP
+\fBOptions:\fR
+.PP
+.TP
+\fB\-n, \-\-dry\-run\fR
+Print what would change without changing anything
+.TP
+\fB\-h, \-\-help\fR
+Print help
+\fBArguments:\fR
+.PP
+.TP
+\fB<NAME>\fR
+The service name as declared in `[bootstrap.services]`
 .SH "MISE BOOTSTRAP SERVICES STATUS"
-Show configured Linux system service state
+Show configured service state (system and user scope)
 .PP
 \fBUsage:\fR mise bootstrap services status [OPTIONS]
 .PP

@@ -17,8 +17,9 @@ Runs the bootstrap steps for the current config in order:
 2. Install built-in-manager entries from `[bootstrap.packages]`
 3. `mise bootstrap files apply` — converge `[bootstrap.files]` and
    `[bootstrap.directories]`
-4. `mise bootstrap services apply` — converge `[bootstrap.services]`
-   systemd system services (Linux)
+4. `mise bootstrap services apply` — converge `[bootstrap.services]`:
+   systemd system services (Linux) and user-scope services on every
+   platform (those with `requires_tools = true` converge after step 14)
 5. `mise bootstrap firewall apply` — converge `[bootstrap.linux.firewall]`
    host firewall policy and rules (Linux)
 6. `mise bootstrap compose apply` — converge `[bootstrap.compose]`
