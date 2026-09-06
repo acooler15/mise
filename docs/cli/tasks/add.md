@@ -32,8 +32,15 @@ See <https://mise.jdx.dev/configuration.html#target-file-for-write-operations>
 - **`--silent`** — Do not print the command or its output
 - **`-h --help`** — Print help
 
-Examples:
-
+## Examples
 ```
 mise tasks add pre-commit --depends "test" --depends "render" -- echo pre-commit
 ```
+
+<!-- generated reference navigation -->
+
+## Related documentation
+
+- [TOML tasks](/tasks/toml-tasks.html).
+- [`mise tasks`](/cli/tasks.html).
+- [Global flags and argument syntax](/cli/#global-flags).

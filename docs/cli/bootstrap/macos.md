@@ -12,5 +12,13 @@ Manage macOS bootstrap config from `[bootstrap.macos]`
 
 ## Subcommands
 
-- [`mise bootstrap macos defaults <SUBCOMMAND>`](/cli/bootstrap/macos/defaults.md)
-- [`mise bootstrap macos launchd-agents <SUBCOMMAND>`](/cli/bootstrap/macos/launchd-agents.md)
+- [`mise bootstrap macos defaults <SUBCOMMAND>`](/cli/bootstrap/macos/defaults.html)
+- [`mise bootstrap macos launchd-agents <SUBCOMMAND>`](/cli/bootstrap/macos/launchd-agents.html)
+
+<!-- generated reference navigation -->
+
+## Related documentation
+
+- [macOS defaults](/bootstrap/macos-defaults.html).
+- [`mise bootstrap`](/cli/bootstrap.html).
+- [Global flags and argument syntax](/cli/#global-flags).

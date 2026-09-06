@@ -20,31 +20,19 @@ use std::borrow::Cow;
 use std::collections::HashMap;
 use std::sync::Arc;
 
-/// Run Model Context Protocol (MCP) server
+/// Run the Model Context Protocol server over stdin/stdout
 ///
-/// This command starts an MCP server that exposes mise functionality
-/// to AI assistants over stdin/stdout using JSON-RPC protocol.
+/// Exposes project tools, tasks, environment, and configuration to an MCP client.
+/// Resources use `mise://tools`, `mise://tasks`, `mise://env`, and `mise://config`.
+/// `mise://tools?include_inactive=true` also includes inactive installations.
 ///
-/// The MCP server provides access to:
-/// - Installed and available tools
-/// - Task definitions and execution
-/// - Environment variables
-/// - Configuration information
-/// - Task execution via the run_task tool
+/// The `list_commands` tool describes commands and their declared effects. `run_task`
+/// executes project tasks with the user's permissions and can change files or invoke
+/// external services. `install_tool` is advertised but currently returns an error.
+/// Environment resources contain real values, including secrets.
 ///
-/// Resources available:
-/// - mise://tools - List all tools (use ?include_inactive=true to include inactive tools)
-/// - mise://tasks - List all tasks with their configurations
-/// - mise://env - List all environment variables
-/// - mise://config - Show configuration files and project root
-///
-/// Tools available:
-/// - list_commands - Every mise command, with its declared effect on the world
-/// - install_tool - Install a tool with an optional version (not yet implemented)
-/// - run_task - Execute a mise task with optional arguments
-///
-/// Note: This is primarily intended for integration with AI assistants like Claude,
-/// Cursor, or other tools that support the Model Context Protocol.
+/// Configure the client to launch mise in the intended project directory. For setup,
+/// protocol testing, and execution limits, see https://mise.jdx.dev/mcp.html.
 #[derive(Debug, usage_rs::Args)]
 #[usage(verbatim_doc_comment, after_long_help = AFTER_LONG_HELP)]
 pub(crate) struct Mcp {}
@@ -521,36 +509,8 @@ impl Mcp {
 static AFTER_LONG_HELP: &str = color_print::cstr!(
     r#"<bold><underline>Examples:</underline></bold>
 
-    # Start the MCP server (typically used by AI assistant tools)
-    $ <bold>mise mcp</bold>
-
-    # Example integration with Claude Desktop (add to claude_desktop_config.json):
-    {
-      "mcpServers": {
-        "mise": {
-          "command": "mise",
-          "args": ["mcp"],
-          "env": {}
-        }
-      }
-    }
-
-    # Interactive testing with JSON-RPC commands:
-    $ <bold>echo '{"jsonrpc":"2.0","id":1,"method":"initialize","params":{"protocolVersion":"2024-11-05","capabilities":{},"clientInfo":{"name":"test","version":"1.0"}}}' | mise mcp</bold>
-
-    # Resources you can query:
-    - <bold>mise://tools</bold> - List active tools
-    - <bold>mise://tools?include_inactive=true</bold> - List all installed tools
-    - <bold>mise://tasks</bold> - List all tasks
-    - <bold>mise://env</bold> - List environment variables
-    - <bold>mise://config</bold> - Show configuration info
-
-    # Tools available:
-    - <bold>list_commands</bold> - Every mise command and what running it does
-      Example: {"include_hidden": false}
-    - <bold>install_tool</bold> - Install a tool (not yet implemented)
-    - <bold>run_task</bold> - Execute a mise task with optional arguments
-      Example: {"task": "build", "args": ["--verbose"]}
+    # Start from the project directory; an MCP client handles the protocol exchange
+    $ <bold>mise -C /path/to/project mcp</bold>
 "#
 );
 

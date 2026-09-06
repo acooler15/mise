@@ -759,33 +759,23 @@ async fn resolve_version_status(
 static AFTER_LONG_HELP: &str = color_print::cstr!(
     r#"<bold><underline>Examples:</underline></bold>
 
+    # Show installed versions and requests from active configuration
     $ <bold>mise ls</bold>
-    node    20.0.0 ~/src/myapp/.tool-versions latest
-    python  3.11.0 ~/.tool-versions           3.10
-    python  3.10.0
 
+    # Show only versions requested by the current configuration
     $ <bold>mise ls --current</bold>
-    node    20.0.0 ~/src/myapp/.tool-versions 20
-    python  3.11.0 ~/.tool-versions           3.11.0
 
+    # Find configured versions that need installation
+    $ <bold>mise ls --missing</bold>
+
+    # Machine-readable output: an object keyed by tool name
     $ <bold>mise ls --json</bold>
-    {
-      "node": [
-        {
-          "version": "20.0.0",
-          "install_path": "/Users/jdx/.mise/installs/node/20.0.0",
-          "source": {
-            "type": "mise.toml",
-            "path": "/Users/jdx/mise.toml"
-          }
-        }
-      ],
-      "python": [...]
-    }
 
+    # With a tool argument, JSON output is an array of its version records
+    $ <bold>mise ls node --json</bold>
+
+    # Include references from every tracked configuration file
     $ <bold>mise ls --all-sources</bold>
-    node    20.0.0  ~/src/myapp/mise.toml  20
-                    ~/.config/mise/config.toml  latest
 "#
 );
 

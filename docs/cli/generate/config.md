@@ -16,8 +16,7 @@ Generate a mise.toml file
 - **`-t --tool-versions <TOOL_VERSIONS>`** — Path to a .tool-versions file to import tools from
 - **`-h --help`** — Print help
 
-Examples:
-
+## Examples
 ```
 mise generate config             # generate mise.toml interactively
 mise generate config .mise.toml  # generate a specific file
@@ -25,3 +24,11 @@ mise generate config -g          # generate the global config file
 mise generate config -y          # skip interactive editor
 mise generate config -n          # preview without writing
 ```
+
+<!-- generated reference navigation -->
+
+## Related documentation
+
+- [Configuration](/configuration.html).
+- [`mise generate`](/cli/generate.html).
+- [Global flags and argument syntax](/cli/#global-flags).

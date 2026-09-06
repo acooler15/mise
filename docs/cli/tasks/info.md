@@ -14,33 +14,19 @@ Get information about a task
 - **`-J --json`** — Output in JSON format
 - **`-h --help`** — Print help
 
-Examples:
-
+## Examples
 ```
-$ mise tasks info
-Name: test
-Aliases: t
-Description: Test the application
-Source: ~/src/myproj/mise.toml
+# Inspect the selected definition and its source file
+$ mise tasks info test
 
+# Get the full structured task definition
 $ mise tasks info test --json
-{
-  "name": "test",
-  "aliases": "t",
-  "description": "Test the application",
-  "source": "~/src/myproj/mise.toml",
-  "config_sources": ["~/src/myproj/mise.toml"],
-  "depends": [],
-  "env": {},
-  "dir": null,
-  "hide": false,
-  "raw": false,
-  "sources": [],
-  "outputs": [],
-  "run": [
-    "echo \"testing!\""
-  ],
-  "file": null,
-  "usage_spec": {}
-}
 ```
+
+<!-- generated reference navigation -->
+
+## Related documentation
+
+- [Task configuration](/tasks/task-configuration.html).
+- [`mise tasks`](/cli/tasks.html).
+- [Global flags and argument syntax](/cli/#global-flags).

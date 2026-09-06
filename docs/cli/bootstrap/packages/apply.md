@@ -27,11 +27,18 @@ only. `install` is accepted as an alias for this command.
 - **`--update`** — Refresh package manager metadata first (apk: `--update-cache`, apt: `apt-get update`)
 - **`-h --help`** — Print help
 
-Examples:
-
+## Examples
 ```
 mise bootstrap packages apply
-mise bootstrap packages apply apk:zlib-dev apt:curl brew:jq brew-cask:firefox flatpak:org.mozilla.firefox flatpak-user:org.gnome.Builder mas:497799835
+mise bootstrap packages apply brew:jq brew-cask:firefox
 mise bootstrap packages apply --dry-run
 mise bootstrap packages apply --manager apt --yes
 ```
+
+<!-- generated reference navigation -->
+
+## Related documentation
+
+- [Host packages](/bootstrap/packages/).
+- [`mise bootstrap packages`](/cli/bootstrap/packages.html).
+- [Global flags and argument syntax](/cli/#global-flags).

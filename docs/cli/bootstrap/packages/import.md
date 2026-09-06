@@ -26,11 +26,18 @@ Pass `--all` to import every linked formula, including dependencies.
   **Aliases:** `--file`
 - **`-h --help`** — Print help
 
-Examples:
-
+## Examples
 ```
 mise bootstrap packages import --manager brew
 mise bootstrap packages import --manager brew --all
 mise bootstrap packages import --manager brew --global
 mise bootstrap packages import --manager brew --dry-run
 ```
+
+<!-- generated reference navigation -->
+
+## Related documentation
+
+- [Host packages](/bootstrap/packages/).
+- [`mise bootstrap packages`](/cli/bootstrap/packages.html).
+- [Global flags and argument syntax](/cli/#global-flags).

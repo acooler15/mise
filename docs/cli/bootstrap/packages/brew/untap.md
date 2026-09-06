@@ -19,8 +19,15 @@ Remove Homebrew tap URLs from [bootstrap.brew.taps]
   **Aliases:** `--file`
 - **`-h --help`** — Print help
 
-Examples:
-
+## Examples
 ```
 mise bootstrap packages brew untap railwaycat/emacsmacport
 ```
+
+<!-- generated reference navigation -->
+
+## Related documentation
+
+- [Homebrew packages and taps](/bootstrap/packages/brew.html).
+- [`mise bootstrap packages brew`](/cli/bootstrap/packages/brew.html).
+- [Global flags and argument syntax](/cli/#global-flags).

@@ -8,7 +8,9 @@
 Generate a GitHub Action workflow file
 
 This command generates a GitHub Action workflow file that runs a mise task like `mise run ci`
-when you push changes to your repository.
+on pull requests, tags, manual dispatch, and pushes to the current Git branch.
+Prints YAML by default; `--write` saves it under .github/workflows. Define
+the selected task and review the generated triggers before committing.
 
 ## Flags
 - **`-t --task <TASK>`** — The task to run when the workflow is triggered
@@ -20,10 +22,18 @@ when you push changes to your repository.
   **Default:** `ci`
 - **`-h --help`** — Print help
 
-Examples:
+## Examples
+```
+# Preview before writing the workflow
+$ mise generate github-action --task=ci
+$ mise generate github-action --write --task=ci
+$ git add .github/workflows/ci.yml
+```
 
-```
-mise generate github-action --write --task=ci
-git commit -m "feat: add new feature"
-git push # runs `mise run ci` on GitHub
-```
+<!-- generated reference navigation -->
+
+## Related documentation
+
+- [Continuous integration](/continuous-integration.html).
+- [`mise generate`](/cli/generate.html).
+- [Global flags and argument syntax](/cli/#global-flags).

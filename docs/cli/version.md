@@ -16,11 +16,18 @@ If the version is out of date, it will display a warning.
 - **`-J --json`** — Print the version information in JSON format
 - **`-h --help`** — Print help
 
-Examples:
-
+## Examples
 ```
 mise version
 mise --version
 mise -v
 mise -V
 ```
+
+<!-- generated reference navigation -->
+
+## Related documentation
+
+- [Troubleshooting](/troubleshooting.html).
+- [All commands](/cli/).
+- [Global flags and argument syntax](/cli/#global-flags).

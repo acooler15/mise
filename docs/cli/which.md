@@ -19,8 +19,7 @@ Use this to figure out what version of a tool is currently active.
 - **`--version`** — Show the version instead of the path
 - **`-h --help`** — Print help
 
-Examples:
-
+## Examples
 ```
 $ mise which node
 /home/username/.local/share/mise/installs/node/20.0.0/bin/node
@@ -31,3 +30,11 @@ node
 $ mise which node --version
 20.0.0
 ```
+
+<!-- generated reference navigation -->
+
+## Related documentation
+
+- [Shims and executable lookup](/dev-tools/shims.html).
+- [All commands](/cli/).
+- [Global flags and argument syntax](/cli/#global-flags).

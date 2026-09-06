@@ -112,6 +112,6 @@ static AFTER_LONG_HELP: &str = color_print::cstr!(
 
     # install node@20.0.0 into ./mynode
     $ <bold>mise install-into node@20.0.0 ./mynode && ./mynode/bin/node -v</bold>
-    20.0.0
+    v20.0.0
 "#
 );

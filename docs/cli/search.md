@@ -25,8 +25,7 @@ non-fuzzy matches, use the `--match-type` flag.
 - **`--no-header`** — Don't display headers
 - **`-h --help`** — Print help
 
-Examples:
-
+## Examples
 ```
 $ mise search jq
 Tool  Description
@@ -45,3 +44,11 @@ Search a tool
 /jq 
 esc clear filter • enter confirm
 ```
+
+<!-- generated reference navigation -->
+
+## Related documentation
+
+- [Registry and explicit backends](/registry.html).
+- [All commands](/cli/).
+- [Global flags and argument syntax](/cli/#global-flags).

@@ -12,8 +12,12 @@ use crate::oci::{BuildOptions, LayerOwner, OciCopy};
 /// Each tool version becomes its own content-addressable OCI layer. Bumping a
 /// tool version only invalidates that tool's layer — other tools, the base
 /// image, and config are reused unchanged. The output directory conforms to
-/// the OCI image-layout spec and can be consumed by `skopeo`, `crane`, or
-/// `podman load`.
+/// the OCI image-layout spec. Use `skopeo inspect oci:./mise-oci` to inspect it
+/// or `mise oci run --image-dir ./mise-oci -- command` to load and run it.
+///
+/// Build on Linux with the target architecture: this packages host tool installs
+/// and, by default, the running mise binary. `--no-mise` omits that binary but does
+/// not cross-compile tools installed for another OS. asdf/vfox tools are unsupported.
 ///
 /// Requires `mise settings experimental=true` (or `MISE_EXPERIMENTAL=1`).
 #[derive(Debug, usage_rs::Args)]
@@ -100,27 +104,10 @@ impl Build {
 static AFTER_LONG_HELP: &str = color_print::cstr!(
     r#"<bold><underline>Examples:</underline></bold>
 
-    Build with defaults (debian:bookworm-slim base):
+    # Run on a Linux host with the target architecture
     $ <bold>mise oci build</bold>
-
-    Build with a specific base image and tag:
     $ <bold>mise oci build --from ubuntu:24.04 --tag myorg/dev:latest -o ./img</bold>
-
-    Inspect the result with skopeo:
-    $ <bold>skopeo inspect oci:./mise-oci</bold>
-
-    Push to a registry:
-    $ <bold>mise oci push --image-dir ./mise-oci ghcr.io/me/dev:latest</bold>
-
-<bold><underline>Notes:</underline></bold>
-
-    - The image only contains tools from the project's mise config (and
-      any configs at-or-below the project root). Tools from
-      `~/.config/mise/config.toml` are not included; pass --include-global
-      to package them too.
-    - asdf and vfox plugins are not supported in v1; use a different backend
-      (core, aqua, ubi, github, cargo, npm, go, pipx, spm, http) for each tool.
-    - The host mise binary is embedded at /usr/local/bin/mise by default;
-      build on the same OS/arch as your target image (or pass --no-mise).
+    $ <bold>skopeo inspect oci:./img</bold>
+    $ <bold>mise oci run --image-dir ./img -- /bin/sh</bold>
 "#
 );

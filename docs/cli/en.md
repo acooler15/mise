@@ -21,8 +21,7 @@ Unlike an activated shell, changing directories does not update the environment.
   Defaults to $SHELL
 - **`-h --help`** — Print help
 
-Examples:
-
+## Examples
 ```
 $ mise en .
 $ node -v
@@ -34,3 +33,11 @@ $ mise en -s "bash --norc"
 Skip loading zshrc:
 $ mise en -s "zsh -f"
 ```
+
+<!-- generated reference navigation -->
+
+## Related documentation
+
+- [Shell activation](/getting-started.html#activate-mise).
+- [All commands](/cli/).
+- [Global flags and argument syntax](/cli/#global-flags).

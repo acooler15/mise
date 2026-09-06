@@ -21,8 +21,7 @@ first applied them are never claimed or removed.
 - **`-y --yes`** — Skip the confirmation prompt
 - **`-h --help`** — Print help
 
-Examples:
-
+## Examples
 ```
 mise bootstrap packages prune --manager brew
 mise bootstrap packages prune --manager brew --dry-run
@@ -30,3 +29,11 @@ mise bootstrap packages prune --manager brew --yes
 mise bootstrap packages prune --manager brew-cask --dry-run
 mise bootstrap packages prune --manager vscode --dry-run
 ```
+
+<!-- generated reference navigation -->
+
+## Related documentation
+
+- [Host packages](/bootstrap/packages/).
+- [`mise bootstrap packages`](/cli/bootstrap/packages.html).
+- [Global flags and argument syntax](/cli/#global-flags).

@@ -18,8 +18,7 @@ The tool must be installed for this to work.
 ## Flags
 - **`-h --help`** — Print help
 
-Examples:
-
+## Examples
 ```
 # Show the latest installed node 20.x
 # Errors if no matching version is installed
@@ -32,3 +31,11 @@ $ mise where node@20
 $ mise where node
 /home/jdx/.local/share/mise/installs/node/20.0.0
 ```
+
+<!-- generated reference navigation -->
+
+## Related documentation
+
+- [Development tools](/dev-tools/).
+- [All commands](/cli/).
+- [Global flags and argument syntax](/cli/#global-flags).

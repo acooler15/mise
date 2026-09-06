@@ -45,15 +45,14 @@ one of: `podman`, `docker`.
 - **`-w --workdir <WORKDIR>`** — Working directory inside the container
 - **`-h --help`** — Print help
 
-Examples:
-
+## Examples
 ```
 Build the current mise.toml and drop into bash:
 $ mise oci run -it -- bash
 
 Run a one-shot command with env + volume (note: `-v` is reserved
 for --verbose, so use `--volume`):
-$ mise oci run -e DEBUG=1 --volume $PWD:/work -w /work -- npm test
+$ mise oci run -e DEBUG=1 --volume "$PWD:/work" -w /work -- npm test
 
 Re-use a previously built layout (skip the build step):
 $ mise oci build -o ./img && mise oci run --image-dir ./img -- node -e 'console.log(process.version)'
@@ -65,3 +64,11 @@ Engines:
 Prefers podman (loads OCI layouts natively). Falls back to docker
 (loaded via docker load). Pass --engine podman or --engine docker to override.
 ```
+
+<!-- generated reference navigation -->
+
+## Related documentation
+
+- [Building and running OCI images](/dev-tools/mise-oci.html).
+- [`mise oci`](/cli/oci.html).
+- [Global flags and argument syntax](/cli/#global-flags).

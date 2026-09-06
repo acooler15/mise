@@ -11,20 +11,17 @@ List built-in backends
 ## Flags
 - **`-h --help`** — Print help
 
-Examples:
-
+## Examples
 ```
+# Installed plugin availability and built-in backends are separate lists
 $ mise backends ls
-aqua
-asdf
-cargo
-core
-dotnet
-gem
-go
-npm
-pipx
-spm
-ubi
-vfox
+$ mise plugins ls
 ```
+
+<!-- generated reference navigation -->
+
+## Related documentation
+
+- [Choosing backends](/dev-tools/backends/).
+- [`mise backends`](/cli/backends.html).
+- [Global flags and argument syntax](/cli/#global-flags).

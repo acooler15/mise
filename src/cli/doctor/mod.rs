@@ -1284,7 +1284,8 @@ static AFTER_LONG_HELP: &str = color_print::cstr!(
     r#"<bold><underline>Examples:</underline></bold>
 
     $ <bold>mise doctor</bold>
-    [WARN] plugin node is not installed
+    $ <bold>mise doctor --json</bold>
+    $ <bold>mise doctor path --full</bold>
 "#
 );
 

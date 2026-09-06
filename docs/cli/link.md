@@ -19,8 +19,7 @@ Use this to register an install that was compiled by hand or built with another 
 - **`-f --force`** — Overwrite an existing tool version if it exists
 - **`-h --help`** — Print help
 
-Examples:
-
+## Examples
 ```
 # build node-20.0.0 with node-build and link it into mise
 $ node-build 20.0.0 ~/.nodes/20.0.0
@@ -28,6 +27,14 @@ $ mise link node@20.0.0 ~/.nodes/20.0.0
 
 # have mise use the node version provided by Homebrew
 $ brew install node
-$ mise link node@brew $(brew --prefix node)
+$ mise link node@brew "$(brew --prefix node)"
 $ mise use node@brew
 ```
+
+<!-- generated reference navigation -->
+
+## Related documentation
+
+- [Development tools](/dev-tools/).
+- [All commands](/cli/).
+- [Global flags and argument syntax](/cli/#global-flags).

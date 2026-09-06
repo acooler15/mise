@@ -312,7 +312,7 @@ static AFTER_LONG_HELP: &str = color_print::cstr!(
 
     Run a one-shot command with env + volume (note: `-v` is reserved
     for --verbose, so use `--volume`):
-    $ <bold>mise oci run -e DEBUG=1 --volume $PWD:/work -w /work -- npm test</bold>
+    $ <bold>mise oci run -e DEBUG=1 --volume "$PWD:/work" -w /work -- npm test</bold>
 
     Re-use a previously built layout (skip the build step):
     $ <bold>mise oci build -o ./img && mise oci run --image-dir ./img -- node -e 'console.log(process.version)'</bold>

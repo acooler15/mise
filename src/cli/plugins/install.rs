@@ -18,18 +18,20 @@ use crate::{backend::unalias_backend, config::Settings};
 
 use super::{PluginTaskNames, PluginTaskResult, join_plugin_tasks, spawn_plugin_task};
 
-/// Install a plugin
+/// Install a plugin from a configured source, Git URL, or supported archive
 ///
-/// Note that mise installs plugins automatically when you install a tool that needs one,
-/// e.g.: `mise install cmake@3.30` installs the cmake plugin first. This command is only
-/// needed to install a plugin ahead of time or from a custom git URL.
+/// Most registry tools use built-in backends and need no plugin. When a selected
+/// backend does require a plugin, mise normally installs it with the tool.
+/// Use this command to install it ahead of time or choose a custom source.
+///
+/// A Git URL may end in `#ref` to select a plugin commit, tag, or branch. This selects
+/// the plugin implementation, separately from the tool version installed by `mise use`.
 #[derive(Debug, usage_rs::Args)]
 #[usage(visible_aliases = ["i", "a", "add"], verbatim_doc_comment, after_long_help = AFTER_LONG_HELP
 )]
 pub(crate) struct PluginsInstall {
     /// The name of the plugin to install
-    /// e.g.: cmake, poetry
-    /// Can specify multiple plugins: `mise plugins install cmake poetry`
+    /// Use a configured plugin name, or supply a source URL below
     #[usage(required_unless = "all", verbatim_doc_comment)]
     new_plugin: Option<String>,
 
@@ -203,18 +205,14 @@ fn get_name_from_url(url: &str) -> Result<String> {
 static AFTER_LONG_HELP: &str = color_print::cstr!(
     r#"<bold><underline>Examples:</underline></bold>
 
-    # install the poetry via shorthand
-    $ <bold>mise plugins install poetry</bold>
+    # Install an asdf-compatible plugin from its upstream repository
+    $ <bold>mise plugins install postgres https://github.com/smashedtoatoms/asdf-postgres.git</bold>
 
-    # install the poetry plugin using a specific git url
-    $ <bold>mise plugins install poetry https://github.com/mise-plugins/mise-poetry.git</bold>
+    # Use a local plugin repository at a tag you created
+    $ <bold>mise plugins install my-tool file:///path/to/mise-my-tool#v1.0.0</bold>
 
-    # install the poetry plugin using the git url only
-    # (poetry is inferred from the url)
-    $ <bold>mise plugins install https://github.com/mise-plugins/mise-poetry.git</bold>
-
-    # install the poetry plugin using a specific ref
-    $ <bold>mise plugins install poetry https://github.com/mise-plugins/mise-poetry.git#11d0c1e</bold>
+    # Install plugins required by the active configuration
+    $ <bold>mise plugins install --all</bold>
 "#
 );
 

@@ -13,8 +13,7 @@
 - **`--no-header`** — Do not print table headers
 - **`-h --help`** — Print help
 
-Examples:
-
+## Examples
 ```
 # Inspect projects and their dependency edges
 $ mise tasks graph
@@ -25,3 +24,11 @@ $ mise tasks graph --json
 # Explain where inferred projects and task fields came from
 $ mise tasks graph --explain
 ```
+
+<!-- generated reference navigation -->
+
+## Related documentation
+
+- [Monorepo projects](/tasks/monorepo.html).
+- [`mise tasks`](/cli/tasks.html).
+- [Global flags and argument syntax](/cli/#global-flags).

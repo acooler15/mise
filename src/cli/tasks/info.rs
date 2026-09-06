@@ -183,31 +183,10 @@ impl TasksInfo {
 static AFTER_LONG_HELP: &str = color_print::cstr!(
     r#"<bold><underline>Examples:</underline></bold>
 
-    $ <bold>mise tasks info</bold>
-    Name: test
-    Aliases: t
-    Description: Test the application
-    Source: ~/src/myproj/mise.toml
+    # Inspect the selected definition and its source file
+    $ <bold>mise tasks info test</bold>
 
+    # Get the full structured task definition
     $ <bold>mise tasks info test --json</bold>
-    {
-      "name": "test",
-      "aliases": "t",
-      "description": "Test the application",
-      "source": "~/src/myproj/mise.toml",
-      "config_sources": ["~/src/myproj/mise.toml"],
-      "depends": [],
-      "env": {},
-      "dir": null,
-      "hide": false,
-      "raw": false,
-      "sources": [],
-      "outputs": [],
-      "run": [
-        "echo \"testing!\""
-      ],
-      "file": null,
-      "usage_spec": {}
-    }
 "#
 );

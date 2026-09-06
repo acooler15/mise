@@ -16,8 +16,15 @@ This modifies the contents of ~/.config/mise/config.toml
 ## Flags
 - **`-h --help`** — Print help
 
-Examples:
-
+## Examples
 ```
 mise shell-alias unset ll
 ```
+
+<!-- generated reference navigation -->
+
+## Related documentation
+
+- [Shell aliases](/shell-aliases.html).
+- [`mise shell-alias`](/cli/shell-alias.html).
+- [Global flags and argument syntax](/cli/#global-flags).

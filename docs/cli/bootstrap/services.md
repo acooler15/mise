@@ -7,10 +7,21 @@
 
 Manage Linux system services from `[bootstrap.services]`
 
+These are system-level systemd services. For units in the current user session,
+use `bootstrap linux systemd-units` instead.
+
 ## Flags
 - **`-h --help`** — Print help
 
 ## Subcommands
 
-- [`mise bootstrap services apply [-n --dry-run] [-y --yes]`](/cli/bootstrap/services/apply.md)
-- [`mise bootstrap services status [-J --json] [--missing]`](/cli/bootstrap/services/status.md)
+- [`mise bootstrap services apply [-n --dry-run] [-y --yes]`](/cli/bootstrap/services/apply.html)
+- [`mise bootstrap services status [-J --json] [--missing]`](/cli/bootstrap/services/status.html)
+
+<!-- generated reference navigation -->
+
+## Related documentation
+
+- [System services](/bootstrap/services.html).
+- [`mise bootstrap`](/cli/bootstrap.html).
+- [Global flags and argument syntax](/cli/#global-flags).

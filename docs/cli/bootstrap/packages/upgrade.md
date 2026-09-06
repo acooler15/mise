@@ -28,8 +28,7 @@ Packages can also be given explicitly in `manager:package` form.
 - **`-y --yes`** — Skip the confirmation prompt
 - **`-h --help`** — Print help
 
-Examples:
-
+## Examples
 ```
 mise bootstrap packages upgrade
 mise bootstrap packages upgrade brew:postgresql@17
@@ -38,3 +37,11 @@ mise bootstrap packages upgrade --manager mas
 mise bootstrap packages upgrade --manager apt --yes
 mise bootstrap packages upgrade --dry-run
 ```
+
+<!-- generated reference navigation -->
+
+## Related documentation
+
+- [Host packages](/bootstrap/packages/).
+- [`mise bootstrap packages`](/cli/bootstrap/packages.html).
+- [Global flags and argument syntax](/cli/#global-flags).

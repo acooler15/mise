@@ -5,9 +5,12 @@ use eyre::bail;
 use std::io::{self, Read, Write};
 use taplo::formatter::Options;
 
-/// Format mise.toml
+/// Format mise TOML configuration
 ///
-/// Sorts keys and cleans up whitespace in mise.toml
+/// Sorts keys and normalizes whitespace using TOML 1.1 syntax, including multiline
+/// inline tables. By default, formats config files in the current directory;
+/// `--all` includes every loaded config. Use `--check` in CI or `--stdin` to format
+/// a supplied document without rewriting a file.
 #[derive(Debug, usage_rs::Args)]
 #[usage(verbatim_doc_comment, after_long_help = AFTER_LONG_HELP)]
 pub(crate) struct Fmt {
@@ -138,5 +141,7 @@ static AFTER_LONG_HELP: &str = color_print::cstr!(
     r#"<bold><underline>Examples:</underline></bold>
 
     $ <bold>mise fmt</bold>
+    $ <bold>mise fmt --check</bold>
+    $ <bold>cat mise.toml | mise fmt --stdin</bold>
 "#
 );

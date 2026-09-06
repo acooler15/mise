@@ -18,9 +18,16 @@ This modifies the contents of ~/.config/mise/config.toml
 ## Flags
 - **`-h --help`** — Print help
 
-Examples:
+## Examples
+```
+mise tool-alias set ripgrep aqua:BurntSushi/ripgrep
+mise tool-alias set node project 20
+```
 
-```
-mise tool-alias set maven asdf:mise-plugins/mise-maven
-mise tool-alias set node lts-jod 22.0.0
-```
+<!-- generated reference navigation -->
+
+## Related documentation
+
+- [Tool version aliases](/dev-tools/aliases.html).
+- [`mise tool-alias`](/cli/tool-alias.html).
+- [Global flags and argument syntax](/cli/#global-flags).

@@ -31,10 +31,17 @@ a mise version selector. mas uses numeric ADAM IDs and does not support pins.
 - **`-y --yes`** — Skip the confirmation prompt
 - **`-h --help`** — Print help
 
-Examples:
-
+## Examples
 ```
-mise bootstrap packages use apk:zlib-dev apt:curl brew:jq brew-cask:firefox flatpak:org.mozilla.firefox flatpak-user:org.gnome.Builder mas:497799835
+mise bootstrap packages use brew:jq brew-cask:firefox
 mise bootstrap packages use -g brew:postgresql@17
 mise bootstrap packages use apt:curl@8.5.0-2
 ```
+
+<!-- generated reference navigation -->
+
+## Related documentation
+
+- [Host packages](/bootstrap/packages/).
+- [`mise bootstrap packages`](/cli/bootstrap/packages.html).
+- [Global flags and argument syntax](/cli/#global-flags).

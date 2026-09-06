@@ -239,18 +239,18 @@ impl Completion {
 static AFTER_LONG_HELP: &str = color_print::cstr!(
     r#"<bold><underline>Examples:</underline></bold>
 
-    # put it where the shell looks, and print any one-time line it still needs
+    # Install for your shell; follow any printed one-time setup instructions
     $ <bold>mise completion zsh --install</bold>
+    $ <bold>mise completion bash --install</bold>
+    $ <bold>mise completion fish --install</bold>
+    $ <bold>mise completion powershell --install</bold>
 
-    # a tool's completion, from the packslip it was installed from
+    # Print a completion script to inspect or save at a custom path
+    $ <bold>mise completion zsh</bold>
+
+    # For a tool installed through Packslip with completion resources
     $ <bold>mise completion zsh --tool rg</bold>
     $ <bold>mise completion zsh --tool rg --install</bold>
-
-    # or choose the path yourself
-    $ <bold>mise completion bash > ~/.local/share/bash-completion/completions/mise</bold>
-    $ <bold>mise completion zsh  > /usr/local/share/zsh/site-functions/_mise</bold>
-    $ <bold>mise completion fish > ~/.config/fish/completions/mise.fish</bold>
-    $ <bold>mise completion powershell >> $PROFILE</bold>
 "#
 );
 

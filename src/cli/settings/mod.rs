@@ -90,7 +90,7 @@ impl Settings {
 
 static AFTER_LONG_HELP: &str = color_print::cstr!(
     r#"<bold><underline>Examples:</underline></bold>
-    # list all settings
+    # list explicitly configured settings
     $ <bold>mise settings</bold>
 
     # get the value of the setting "always_keep_download"

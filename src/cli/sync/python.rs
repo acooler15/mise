@@ -135,12 +135,12 @@ static AFTER_LONG_HELP: &str = color_print::cstr!(
 
     $ <bold>pyenv install 3.11.0</bold>
     $ <bold>mise sync python --pyenv</bold>
-    $ <bold>mise use -g python@3.11.0</bold> - uses pyenv-provided python
+    $ <bold>mise use -g python@3.11.0</bold> # uses pyenv-provided python
     
     $ <bold>uv python install 3.11.0</bold>
     $ <bold>mise install python@3.10.0</bold>
     $ <bold>mise sync python --uv</bold>
-    $ <bold>mise x python@3.11.0 -- python -V</bold> - uses uv-provided python
-    $ <bold>uv run -p 3.10.0 -- python -V</bold> - uses mise-provided python
+    $ <bold>mise x python@3.11.0 -- python -V</bold> # uses uv-provided python
+    $ <bold>uv run -p 3.10.0 -- python -V</bold> # uses mise-provided python
 "#
 );

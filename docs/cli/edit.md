@@ -16,8 +16,7 @@ Edit mise.toml interactively
 - **`-t --tool-versions <TOOL_VERSIONS>`** — Path to a .tool-versions file to import tools from
 - **`-h --help`** — Print help
 
-Examples:
-
+## Examples
 ```
 mise edit             # edit mise.toml interactively
 mise edit .mise.toml  # edit a specific file
@@ -25,3 +24,11 @@ mise edit -g          # edit the global config file
 mise edit -y          # skip interactive editor
 mise edit -n          # preview without writing
 ```
+
+<!-- generated reference navigation -->
+
+## Related documentation
+
+- [Configuration](/configuration.html).
+- [All commands](/cli/).
+- [Global flags and argument syntax](/cli/#global-flags).

@@ -36,8 +36,7 @@ Deprecation:
 The `-l` shorthand for `--bump` is deprecated and will be removed in mise 2027.8.5.
 After removal, `-l` will become shorthand for `--local`. Use `-b` or `--bump` instead.
 
-Examples:
-
+## Examples
 ```
 $ mise outdated
 Plugin  Requested  Current  Latest
@@ -55,3 +54,11 @@ $ mise outdated --local
 Plugin  Requested  Current  Latest
 node    20         20.0.0   20.1.0
 ```
+
+<!-- generated reference navigation -->
+
+## Related documentation
+
+- [Upgrading tools](/dev-tools/).
+- [All commands](/cli/).
+- [Global flags and argument syntax](/cli/#global-flags).

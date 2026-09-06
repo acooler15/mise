@@ -5,12 +5,11 @@
 - **Effect:** read-only
 - **Source code:** [`src/cli/settings/get.rs`](https://github.com/jdx/mise/blob/main/src/cli/settings/get.rs)
 
-Show a current setting
+Show the effective value of a setting
 
-This is the contents of a single entry in ~/.config/mise/config.toml
-
-Note that aliases are also stored in this file
-but managed separately with `mise tool-alias get`
+Includes defaults, configuration, and environment overrides. With `--local`,
+read only the selected local config's explicit settings; an unset key is an error.
+Use `mise config get settings.KEY --file path/to/mise.toml` to inspect one file.
 
 ## Arguments
 - **`<SETTING>`** — The setting to show
@@ -19,9 +18,16 @@ but managed separately with `mise tool-alias get`
 - **`-l --local`** — Use the local config file instead of the global one
 - **`-h --help`** — Print help
 
-Examples:
+## Examples
+```
+mise settings get jobs
+mise settings get python.compile
+```
 
-```
-$ mise settings get idiomatic_version_file
-true
-```
+<!-- generated reference navigation -->
+
+## Related documentation
+
+- [Settings reference](/configuration/settings.html).
+- [`mise settings`](/cli/settings.html).
+- [Global flags and argument syntax](/cli/#global-flags).

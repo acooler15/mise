@@ -7,10 +7,21 @@
 
 Manage the Linux host firewall from `[bootstrap.linux.firewall]`
 
+This manages host firewall policy and rules. Review `apply --dry-run` before applying
+a policy to a remote machine, including the rule that permits your SSH connection.
+
 ## Flags
 - **`-h --help`** — Print help
 
 ## Subcommands
 
-- [`mise bootstrap firewall apply [-n --dry-run] [-y --yes]`](/cli/bootstrap/firewall/apply.md)
-- [`mise bootstrap firewall status [-J --json] [--missing]`](/cli/bootstrap/firewall/status.md)
+- [`mise bootstrap firewall apply [-n --dry-run] [-y --yes]`](/cli/bootstrap/firewall/apply.html)
+- [`mise bootstrap firewall status [-J --json] [--missing]`](/cli/bootstrap/firewall/status.html)
+
+<!-- generated reference navigation -->
+
+## Related documentation
+
+- [Host firewall](/bootstrap/firewall.html).
+- [`mise bootstrap`](/cli/bootstrap.html).
+- [Global flags and argument syntax](/cli/#global-flags).

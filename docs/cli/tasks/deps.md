@@ -24,8 +24,7 @@ their own `depends`.
 - **`--hidden`** — Show hidden tasks
 - **`-h --help`** — Print help
 
-Examples:
-
+## Examples
 ```
 # Show dependencies for all tasks
 $ mise tasks deps
@@ -39,3 +38,11 @@ $ mise tasks deps --dot
 # Collapse repeated dependencies
 $ mise tasks deps --compact
 ```
+
+<!-- generated reference navigation -->
+
+## Related documentation
+
+- [Task dependency graph](/tasks/architecture.html).
+- [`mise tasks`](/cli/tasks.html).
+- [Global flags and argument syntax](/cli/#global-flags).

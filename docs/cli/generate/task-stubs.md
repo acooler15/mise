@@ -40,11 +40,18 @@ When a parent and nested task both exist, the parent stub is written to `<parent
   **Default:** `cmd`
 - **`-h --help`** — Print help
 
-Examples:
-
+## Examples
 ```
 $ mise tasks add test -- echo 'running tests'
 $ mise generate task-stubs
 $ ./bin/test
 running tests
 ```
+
+<!-- generated reference navigation -->
+
+## Related documentation
+
+- [Tasks and automation](/tasks/).
+- [`mise generate`](/cli/generate.html).
+- [Global flags and argument syntax](/cli/#global-flags).

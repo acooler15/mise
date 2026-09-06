@@ -51,13 +51,15 @@ fn push_unique_lock_tool(tools: &mut Vec<LockTool>, tool: LockTool) {
     }
 }
 
-/// Update lockfile checksums and URLs for all specified platforms
+/// Create or refresh lockfile versions, checksums, and download URLs
 ///
-/// Updates checksums and download URLs for all platforms already specified in the lockfile.
-/// If no lockfile exists, shows what would be created based on the current configuration,
-/// including tools declared by tasks.
-/// This allows you to refresh lockfile data for platforms other than the one you're currently on.
-/// Operates on the lockfile in the current config root. Use TOOL arguments to target specific tools.
+/// Operates on the current config root, including tools declared by tasks. Existing
+/// matching locked versions are preserved unless `--bump` re-resolves their selectors.
+/// This command writes lockfiles without installing tools; `--dry-run` previews changes.
+///
+/// Use `--platform` for explicit targets. Otherwise mise uses `lockfile_platforms`
+/// plus the current platform when that setting is configured, existing lockfile
+/// platforms when available, or the common platform defaults for a new lockfile.
 #[derive(Debug, usage_rs::Args)]
 #[usage(verbatim_doc_comment, after_long_help = AFTER_LONG_HELP)]
 pub(crate) struct Lock {
@@ -83,7 +85,7 @@ pub(crate) struct Lock {
 
     /// Comma-separated list of platforms to target
     /// e.g.: linux-x64,macos-arm64,windows-x64
-    /// If not specified, all platforms already in lockfile will be updated
+    /// If omitted, use lockfile_platforms, existing platforms, or common defaults
     #[usage(long, short, delimiter = ',', verbatim_doc_comment)]
     pub platform: Vec<String>,
 
@@ -1741,7 +1743,7 @@ impl Lock {
 static AFTER_LONG_HELP: &str = color_print::cstr!(
     r#"<bold><underline>Examples:</underline></bold>
 
-    $ <bold>mise lock</bold>                       # update lockfile for all common platforms
+    $ <bold>mise lock</bold>                       # create or refresh the project lockfile
     $ <bold>mise lock node python</bold>           # update only node and python
     $ <bold>mise lock --platform linux-x64</bold>  # update only linux-x64 platform
     $ <bold>mise lock --dry-run</bold>             # show what would be updated

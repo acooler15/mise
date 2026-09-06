@@ -6,7 +6,9 @@ use crate::git::Git;
 /// Generate a GitHub Action workflow file
 ///
 /// This command generates a GitHub Action workflow file that runs a mise task like `mise run ci`
-/// when you push changes to your repository.
+/// on pull requests, tags, manual dispatch, and pushes to the current Git branch.
+/// Prints YAML by default; `--write` saves it under .github/workflows. Define
+/// the selected task and review the generated triggers before committing.
 #[derive(Debug, usage_rs::Args)]
 #[usage(verbatim_doc_comment, after_long_help = AFTER_LONG_HELP)]
 pub(super) struct GithubAction {
@@ -73,8 +75,9 @@ jobs:
 static AFTER_LONG_HELP: &str = color_print::cstr!(
     r#"<bold><underline>Examples:</underline></bold>
 
+    # Preview before writing the workflow
+    $ <bold>mise generate github-action --task=ci</bold>
     $ <bold>mise generate github-action --write --task=ci</bold>
-    $ <bold>git commit -m "feat: add new feature"</bold>
-    $ <bold>git push</bold> <dim># runs `mise run ci` on GitHub</dim>
+    $ <bold>git add .github/workflows/ci.yml</bold>
 "#
 );

@@ -1073,7 +1073,7 @@ After removal, `-l` will become shorthand for `--local`. Use `-b` or `--bump` in
     # Upgrades node to the latest version and bumps the version in mise.toml
     $ <bold>mise upgrade node --bump</bold>
 
-    # Upgrades all tools to the latest versions
+    # Upgrades all configured tools within their current requests
     $ <bold>mise upgrade</bold>
 
     # Upgrades all tools to the latest versions and bumps the version in mise.toml
@@ -1082,7 +1082,7 @@ After removal, `-l` will become shorthand for `--local`. Use `-b` or `--bump` in
     # Just print what would be done, don't actually do it
     $ <bold>mise upgrade --dry-run</bold>
 
-    # Upgrades node and python to the latest versions
+    # Upgrades node and python within their current requests
     $ <bold>mise upgrade node python</bold>
 
     # Upgrade all tools except go

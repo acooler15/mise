@@ -35,7 +35,7 @@ impl ToolAliasUnset {
 static AFTER_LONG_HELP: &str = color_print::cstr!(
     r#"<bold><underline>Examples:</underline></bold>
 
-    $ <bold>mise tool-alias unset maven</bold>
-    $ <bold>mise tool-alias unset node lts-jod</bold>
+    $ <bold>mise tool-alias unset ripgrep</bold>
+    $ <bold>mise tool-alias unset node project</bold>
 "#
 );

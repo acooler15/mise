@@ -8,7 +8,8 @@ use crate::config::{ConfigPathOptions, resolve_target_config_path};
 
 /// Remove environment variable(s) from the config file
 ///
-/// By default, this command modifies `mise.toml` in the current directory.
+/// By default, this command selects the nearest configuration directory and
+/// modifies its lowest-precedence TOML file, creating `mise.toml` here if none exists.
 #[derive(Debug, usage_rs::Args)]
 #[usage(verbatim_doc_comment, after_long_help = AFTER_LONG_HELP)]
 pub(crate) struct Unset {
@@ -34,7 +35,7 @@ pub(crate) struct Unset {
 const AFTER_LONG_HELP: &str = color_print::cstr!(
     r#"<bold><underline>Examples:</underline></bold>
 
-    # Remove NODE_ENV from the current directory's config
+    # Remove NODE_ENV from the selected project config
     $ <bold>mise unset NODE_ENV</bold>
 
     # Remove NODE_ENV from the global config

@@ -6,7 +6,10 @@ use std::path::{Path, PathBuf};
 const TASK_PLACEHOLDER_START: &str = "<!-- mise-tasks -->";
 const TASK_PLACEHOLDER_END: &str = "<!-- /mise-tasks -->";
 
-/// Generate documentation for tasks in a project
+/// Generate Markdown documentation for project tasks
+///
+/// Prints to stdout by default. Use `--output` to write a file, `--inject`
+/// to replace a marked section, or `--multi` for one file per task.
 #[derive(Debug, usage_rs::Args)]
 #[usage(verbatim_doc_comment, after_long_help = AFTER_LONG_HELP)]
 pub(super) struct TaskDocs {
@@ -152,7 +155,11 @@ fn inject_task_docs(contents: &str, doc: &str, output: &Path) -> eyre::Result<St
 static AFTER_LONG_HELP: &str = color_print::cstr!(
     r#"<bold><underline>Examples:</underline></bold>
 
-    $ <bold>mise generate task-docs</bold>
+    $ <bold>mise generate task-docs --style detailed</bold>
+    $ <bold>mise generate task-docs --output TASKS.md</bold>
+
+    # README.md must already contain both mise-tasks marker comments
+    $ <bold>mise generate task-docs --inject --output README.md</bold>
 "#
 );
 

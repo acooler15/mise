@@ -21,10 +21,17 @@ mise doesn't otherwise own.
 - **`-y --yes`** — Skip the confirmation prompt
 - **`-h --help`** — Print help
 
-Examples:
-
+## Examples
 ```
 mise bootstrap dotfiles apply
 mise bootstrap dotfiles apply --dry-run
 mise bootstrap dotfiles apply --force --yes
 ```
+
+<!-- generated reference navigation -->
+
+## Related documentation
+
+- [Dotfile ownership and modes](/dotfiles.html).
+- [`mise bootstrap dotfiles`](/cli/bootstrap/dotfiles.html).
+- [Global flags and argument syntax](/cli/#global-flags).

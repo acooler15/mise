@@ -13,7 +13,9 @@ use super::{PluginTaskNames, PluginTaskResult, join_plugin_tasks, spawn_plugin_t
 
 /// Update a plugin to the latest version
 ///
-/// Note: this updates the plugin itself, not the tool versions it manages
+/// With no names, updates every installed plugin. This updates plugin source,
+/// not the tool versions it manages. Linked local plugins are skipped; archive
+/// installations cannot be updated with Git.
 #[derive(Debug, usage_rs::Args)]
 #[usage(verbatim_doc_comment, visible_aliases = ["up", "upgrade"], after_long_help = AFTER_LONG_HELP)]
 pub(super) struct Update {
@@ -70,8 +72,8 @@ impl Update {
 static AFTER_LONG_HELP: &str = color_print::cstr!(
     r#"<bold><underline>Examples:</underline></bold>
 
-    $ <bold>mise plugins update</bold>              # update all plugins
-    $ <bold>mise plugins update cmake</bold>       # update only cmake
-    $ <bold>mise plugins update cmake#beta</bold>  # specify a ref
+    $ <bold>mise plugins update</bold>              # update all installed plugins
+    $ <bold>mise plugins update my-tool</bold>      # update one Git plugin
+    $ <bold>mise plugins update my-tool#main</bold> # select an upstream ref
 "#
 );

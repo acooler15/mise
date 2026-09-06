@@ -116,7 +116,7 @@ static AFTER_LONG_HELP: &str = color_print::cstr!(
 
     # have mise use the node version provided by Homebrew
     $ <bold>brew install node</bold>
-    $ <bold>mise link node@brew $(brew --prefix node)</bold>
+    $ <bold>mise link node@brew "$(brew --prefix node)"</bold>
     $ <bold>mise use node@brew</bold>
 "#
 );

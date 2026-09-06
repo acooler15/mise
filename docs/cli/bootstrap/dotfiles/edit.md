@@ -17,9 +17,16 @@ Edit a managed dotfile source
 - **`-y --yes`** — Skip the confirmation prompt when adding an unmanaged target
 - **`-h --help`** — Print help
 
-Examples:
-
+## Examples
 ```
 mise bootstrap dotfiles edit ~/.zshrc
 mise bootstrap dotfiles edit --apply ~/.config/starship.toml
 ```
+
+<!-- generated reference navigation -->
+
+## Related documentation
+
+- [Dotfile ownership and modes](/dotfiles.html).
+- [`mise bootstrap dotfiles`](/cli/bootstrap/dotfiles.html).
+- [Global flags and argument syntax](/cli/#global-flags).

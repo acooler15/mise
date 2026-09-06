@@ -12,8 +12,7 @@ Print the current PATH entries mise is providing
 - **`-f --full`** — Print all entries including those not provided by mise
 - **`-h --help`** — Print help
 
-Examples:
-
+## Examples
 ```
 Get the current PATH entries mise is providing
 $ mise doctor path
@@ -21,3 +20,11 @@ $ mise doctor path
 /home/user/.local/share/mise/installs/rust/1.90.0/bin
 /home/user/.local/share/mise/installs/python/3.10.0/bin
 ```
+
+<!-- generated reference navigation -->
+
+## Related documentation
+
+- [Troubleshooting](/troubleshooting.html).
+- [`mise doctor`](/cli/doctor.html).
+- [Global flags and argument syntax](/cli/#global-flags).

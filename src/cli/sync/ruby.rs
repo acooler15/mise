@@ -73,6 +73,6 @@ static AFTER_LONG_HELP: &str = color_print::cstr!(
 
     $ <bold>brew install ruby</bold>
     $ <bold>mise sync ruby --brew</bold>
-    $ <bold>mise use -g ruby</bold> - Use the latest version of Ruby installed by Homebrew
+    $ <bold>mise ls ruby --installed</bold> # inspect linked versions, then select one with mise use
 "#
 );

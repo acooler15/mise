@@ -70,8 +70,7 @@ Deprecation:
 The `-l` shorthand for `--bump` is deprecated and will be removed in mise 2027.8.5.
 After removal, `-l` will become shorthand for `--local`. Use `-b` or `--bump` instead.
 
-Examples:
-
+## Examples
 ```
 # Upgrades node to the latest version matching the range in mise.toml
 $ mise upgrade node
@@ -79,7 +78,7 @@ $ mise upgrade node
 # Upgrades node to the latest version and bumps the version in mise.toml
 $ mise upgrade node --bump
 
-# Upgrades all tools to the latest versions
+# Upgrades all configured tools within their current requests
 $ mise upgrade
 
 # Upgrades all tools to the latest versions and bumps the version in mise.toml
@@ -88,7 +87,7 @@ $ mise upgrade --bump
 # Just print what would be done, don't actually do it
 $ mise upgrade --dry-run
 
-# Upgrades node and python to the latest versions
+# Upgrades node and python within their current requests
 $ mise upgrade node python
 
 # Upgrade all tools except go
@@ -100,3 +99,11 @@ $ mise upgrade --interactive
 # Only upgrade tools defined in local mise.toml, not global ones
 $ mise upgrade --local
 ```
+
+<!-- generated reference navigation -->
+
+## Related documentation
+
+- [Development tools](/dev-tools/).
+- [All commands](/cli/).
+- [Global flags and argument syntax](/cli/#global-flags).

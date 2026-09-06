@@ -5,11 +5,14 @@
 - **Effect:** read-only
 - **Source code:** [`src/cli/registry.rs`](https://github.com/jdx/mise/blob/main/src/cli/registry.rs)
 
-List available tools to install
+List registry shorthand names and their backends
 
-This command lists the tools available in the registry as shorthand names.
+The registry maps short names to installation backends. For example, `node`
+uses the built-in Node backend. A tool may have multiple candidates; explicit
+backend syntax and configuration can override registry selection.
 
-For example, `poetry` is shorthand for `asdf:mise-plugins/mise-poetry`.
+This is not a list of every tool mise can install. Use an explicit identifier
+such as `github:owner/repo` for a supported source without a registry shorthand.
 
 ## Arguments
 - **`[NAME]`** — Show only the specified tool's full name
@@ -23,14 +26,20 @@ For example, `poetry` is shorthand for `asdf:mise-plugins/mise-poetry`.
   Requires --json. Security info is de-duplicated across all of a tool's backends. This can add noticeable time for large listings since each backend's security info is resolved individually.
 - **`-h --help`** — Print help
 
-Examples:
-
+## Examples
 ```
 $ mise registry
-node    core:node
-poetry  asdf:mise-plugins/mise-poetry
-ubi     cargo:ubi-cli
+$ mise registry node
+core:node
 
-$ mise registry poetry
-asdf:mise-plugins/mise-poetry
+$ mise registry --backend aqua
+$ mise registry --json
 ```
+
+<!-- generated reference navigation -->
+
+## Related documentation
+
+- [Registry and explicit backends](/registry.html).
+- [All commands](/cli/).
+- [Global flags and argument syntax](/cli/#global-flags).

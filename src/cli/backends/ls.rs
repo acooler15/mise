@@ -22,18 +22,8 @@ impl BackendsLs {
 static AFTER_LONG_HELP: &str = color_print::cstr!(
     r#"<bold><underline>Examples:</underline></bold>
 
+    # Installed plugin availability and built-in backends are separate lists
     $ <bold>mise backends ls</bold>
-    aqua
-    asdf
-    cargo
-    core
-    dotnet
-    gem
-    go
-    npm
-    pipx
-    spm
-    ubi
-    vfox
+    $ <bold>mise plugins ls</bold>
 "#
 );

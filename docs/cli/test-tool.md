@@ -24,8 +24,15 @@ for this command.
 - **`--raw`** — Connect backend install command stdin/stdout/stderr directly to the terminal. Implies `--jobs=1`
 - **`-h --help`** — Print help
 
-Examples:
-
+## Examples
 ```
 mise test-tool ripgrep
 ```
+
+<!-- generated reference navigation -->
+
+## Related documentation
+
+- [Contributing and registry tests](/contributing.html#tool-testing).
+- [All commands](/cli/).
+- [Global flags and argument syntax](/cli/#global-flags).

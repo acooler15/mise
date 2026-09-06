@@ -16,9 +16,16 @@ The task will be created as a standalone script if it does not already exist.
 - **`-p --path`** — Display the path to the task instead of editing it
 - **`-h --help`** — Print help
 
-Examples:
-
+## Examples
 ```
 mise tasks edit build
 mise tasks edit test
 ```
+
+<!-- generated reference navigation -->
+
+## Related documentation
+
+- [File tasks](/tasks/file-tasks.html).
+- [`mise tasks`](/cli/tasks.html).
+- [Global flags and argument syntax](/cli/#global-flags).

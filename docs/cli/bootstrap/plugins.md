@@ -7,10 +7,20 @@
 
 Manage package manager plugins declared in `[bootstrap.plugins]`
 
+Install these plugins before applying packages they manage. Installing a plugin does not itself install the host packages in `[bootstrap.packages]`.
+
 ## Flags
 - **`-h --help`** — Print help
 
 ## Subcommands
 
-- [`mise bootstrap plugins apply [-n --dry-run]`](/cli/bootstrap/plugins/apply.md)
-- [`mise bootstrap plugins status [--missing]`](/cli/bootstrap/plugins/status.md)
+- [`mise bootstrap plugins apply [-n --dry-run]`](/cli/bootstrap/plugins/apply.html)
+- [`mise bootstrap plugins status [--missing]`](/cli/bootstrap/plugins/status.html)
+
+<!-- generated reference navigation -->
+
+## Related documentation
+
+- [Package plugins](/bootstrap/packages/plugins.html).
+- [`mise bootstrap`](/cli/bootstrap.html).
+- [Global flags and argument syntax](/cli/#global-flags).

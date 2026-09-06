@@ -12,9 +12,17 @@ Manage dotfiles from `[dotfiles]`
 
 ## Subcommands
 
-- [`mise bootstrap dotfiles add [FLAGS] [TARGET]…`](/cli/bootstrap/dotfiles/add.md)
-- [`mise bootstrap dotfiles apply [FLAGS] [TARGET]…`](/cli/bootstrap/dotfiles/apply.md)
-- [`mise bootstrap dotfiles diff [TARGET]…`](/cli/bootstrap/dotfiles/diff.md)
-- [`mise bootstrap dotfiles edit [FLAGS] <TARGET>`](/cli/bootstrap/dotfiles/edit.md)
-- [`mise bootstrap dotfiles status [-J --json] [--missing] [TARGET]…`](/cli/bootstrap/dotfiles/status.md)
-- [`mise bootstrap dotfiles unapply [FLAGS] [TARGET]…`](/cli/bootstrap/dotfiles/unapply.md)
+- [`mise bootstrap dotfiles add [FLAGS] [TARGET]…`](/cli/bootstrap/dotfiles/add.html)
+- [`mise bootstrap dotfiles apply [FLAGS] [TARGET]…`](/cli/bootstrap/dotfiles/apply.html)
+- [`mise bootstrap dotfiles diff [TARGET]…`](/cli/bootstrap/dotfiles/diff.html)
+- [`mise bootstrap dotfiles edit [FLAGS] <TARGET>`](/cli/bootstrap/dotfiles/edit.html)
+- [`mise bootstrap dotfiles status [-J --json] [--missing] [TARGET]…`](/cli/bootstrap/dotfiles/status.html)
+- [`mise bootstrap dotfiles unapply [FLAGS] [TARGET]…`](/cli/bootstrap/dotfiles/unapply.html)
+
+<!-- generated reference navigation -->
+
+## Related documentation
+
+- [Dotfile ownership and modes](/dotfiles.html).
+- [`mise bootstrap`](/cli/bootstrap.html).
+- [Global flags and argument syntax](/cli/#global-flags).
