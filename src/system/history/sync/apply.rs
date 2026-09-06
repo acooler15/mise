@@ -408,7 +408,10 @@ async fn apply_round(
         request.capture = false;
         match run::sync(store, &tracked, &request) {
             Ok(_) => {
+                // everything the configuration declared, not only the
+                // paths this pull named: they were not pending before it
                 let follow_up = ApplyRequest {
+                    paths: vec![],
                     take_remote: vec![],
                     keep_local: vec![],
                     yes: true,

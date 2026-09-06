@@ -125,6 +125,9 @@ pub(crate) struct SyncRequest {
     /// No network: reconcile against the branch as last fetched and record
     /// what is pending (after an incoming configuration declared more).
     pub offline: bool,
+    /// A preview: nothing is announced (the caller puts the recorded state
+    /// back afterwards).
+    pub dry_run: bool,
 }
 
 impl SyncRequest {
@@ -134,6 +137,7 @@ impl SyncRequest {
             capture: true,
             origin: None,
             offline: false,
+            dry_run: false,
         }
     }
 }
@@ -325,7 +329,9 @@ pub(crate) fn sync(
         outcome.conflicts = status.conflicts.len();
         status.last_error = None;
         status.backoff_until = None;
-        notify_new_conflicts(&mut status);
+        if !request.dry_run {
+            notify_new_conflicts(&mut status);
+        }
         Ok(())
     })();
     if let Err(err) = &result {
