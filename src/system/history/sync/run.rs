@@ -341,22 +341,6 @@ pub(crate) fn sync(
     result.map(|()| outcome)
 }
 
-/// Whether an upstream path belongs on this machine: configuration and
-/// sources always; a tracked entry's stream only when it is the one this
-/// machine selects (its variant, or the base stream when it has none), so
-/// another platform's version is never applied here and never read as a
-/// change. A stream with no tracked entry yet (a fresh machine before its
-/// configuration arrived) waits for the next sync.
-fn eligible(roots: &Roots, tracked: &TrackedSet, branch_path: &str) -> bool {
-    match roots.locate(branch_path) {
-        Located::Tracked { path, variant } => tracked
-            .entry_for(&path)
-            .is_some_and(|entry| entry.variant == variant),
-        Located::Config(_) | Located::Source(_) | Located::Marker => true,
-        Located::Unmapped => false,
-    }
-}
-
 /// A desktop notification for conflicts that newly need a decision, when
 /// `history.notify` is on. Each conflict notifies once: a retry of the same
 /// sync is silent, and a resolved conflict is forgotten so it notifies
