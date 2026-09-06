@@ -18,6 +18,11 @@ parse, a path with unsaved local edits, staged git changes in your own
 checkout, or a genuine local edit is held with its group. Conflicts
 are decided per path with `--take-remote` or `--keep-local`.
 
+In `sync` mode the history watcher pulls nonconflicting changes on its
+own; this command writes what is pending right now and decides
+conflicts. When an incoming configuration declares more tracked files,
+their shared versions follow in the same run.
+
 ## Arguments
 - **`[PATH]…`** — Only these paths (files or directories)
 
