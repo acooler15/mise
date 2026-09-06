@@ -28,7 +28,7 @@
 - [Registry](https://mise.jdx.dev/registry.html): List of all tools aliased by default in mise.
 - [GitHub Tokens](https://mise.jdx.dev/dev-tools/github-tokens.html): Many tools in mise are hosted on GitHub. For public releases, mise uses mise-versions by default as a shared cache for version lists, release metadata, and GitHub artifact attestations.
 - [mise.lock Lockfile](https://mise.jdx.dev/dev-tools/mise-lock.html): mise.toml records the versions a project accepts; mise.lock records the concrete versions those requests resolved to.
-- [Security](https://mise.jdx.dev/security.html): mise includes several supply-chain controls for installing and managing tools. These controls have different coverage depending on the backend and the metadata available from upstream.
+- [Security](https://mise.jdx.dev/security.html): mise provides controls for different parts of a development workflow. Choose the control that addresses the operation you are running.
 - [Packslip Completions and Skills](https://mise.jdx.dev/dev-tools/packslip-resources.html): Tools installed with the Packslip backend can provide shell completions and agent skills that match the version active in your project. The publisher declares these resources in the release manifest.
 - [Packslip Verification and Policy](https://mise.jdx.dev/dev-tools/packslip-verification.html): mise uses Packslip's signed metadata to discover releases, verify publishers, and select compatible builds. This guide describes the discovery and policy rules behind the Packslip backend.
 - [OCI Images (experimental)](https://mise.jdx.dev/dev-tools/mise-oci.html): mise oci build turns a mise.toml into a container image, with one OCI layer per installed tool.
@@ -116,7 +116,7 @@
 - [Remote Cache Protocol](https://mise.jdx.dev/tasks/remote-cache-protocol.html): [!WARNING] Remote build caching is experimental. This document defines protocol version 1 for mise task artifact caching.
 - [Task Templates](https://mise.jdx.dev/tasks/templates.html): Task templates let you define reusable task definitions that multiple tasks can extend. They are particularly useful in monorepos or projects with similar task patterns across components.
 - [Monorepo Tasks](https://mise.jdx.dev/tasks/monorepo.html): mise supports monorepo-style task organization with target path syntax. This lets you manage tasks across multiple projects in a single repository, where each project can have its own mise.toml with…
-- [Sandboxing](https://mise.jdx.dev/sandboxing.html): mise supports lightweight process sandboxing for mise exec and mise run, inspired by zerobox. Sandboxing restricts filesystem, network, and environment variable access with granular controls.
+- [Sandboxing](https://mise.jdx.dev/sandboxing.html): mise can restrict filesystem, network, and environment access for commands launched by mise exec and mise run. Restrictions use the host operating system, with different support on Linux and macOS.
 
 ## Plugins
 
@@ -155,9 +155,9 @@
 ## Advanced
 
 - [Architecture](https://mise.jdx.dev/architecture.html): This document gives an overview of mise's architecture. It is aimed at contributors and anyone interested in how mise works internally.
-- [Paranoid](https://mise.jdx.dev/paranoid.html): Paranoid mode is an optional behavior that locks mise down further to make it harder for a bad actor to compromise your system.
+- [Paranoid](https://mise.jdx.dev/paranoid.html): Paranoid mode requires explicit trust for non-global configuration and rechecks supported provenance during installation. Use it when you want configuration edits to require renewed approval.
 - [Templates](https://mise.jdx.dev/templates.html): Use Tera expressions to derive configuration values from the project directory, environment, or [vars]. mise renders those expressions when it resolves configuration or prepares a task.
-- [URL Replacements](https://mise.jdx.dev/url-replacements.html): mise does not include a built-in registry for downloading artifacts. Instead, it retrieves remote registry manifests, which specify the URLs for downloading tools.
+- [URL Replacements](https://mise.jdx.dev/url-replacements.html): Use url_replacements to route requests made by mise's HTTP client through an internal mirror or proxy. This can cover release metadata and artifact downloads, including Conda channel metadata.
 - [Model Context Protocol](https://mise.jdx.dev/mcp.html): The Model Context Protocol (MCP) is a standard protocol that enables AI assistants to interact with development tools and access project context.
 - [Directory Structure](https://mise.jdx.dev/directories.html): mise uses the following directories.
 - [Cache Behavior](https://mise.jdx.dev/cache-behavior.html): mise uses caching in many places to be efficient. How long each cache is kept should eventually be fully configurable.
