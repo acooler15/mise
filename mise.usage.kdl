@@ -1373,7 +1373,7 @@ recreates it if it is still declared.
 """#
             flag "-n --dry-run" help="Print what would change without changing anything"
             flag "-h --help" help="Print help" action=help builtin=#true
-            arg <NAME> help="The service name as declared in `[bootstrap.services]`"
+            arg <NAME> help="The installed user-service name to remove (declared or not)"
         }
         cmd status help="Show configured service state (system and user scope)" effect=read {
             flag "-J --json" help="Output in JSON format"
