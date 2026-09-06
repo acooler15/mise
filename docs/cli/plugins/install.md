@@ -38,7 +38,7 @@ $ mise plugins install postgres https://github.com/smashedtoatoms/asdf-postgres.
 # Use a local plugin repository at a tag you created
 $ mise plugins install my-tool file:///path/to/mise-my-tool#v1.0.0
 
-# Install plugins required by the active configuration
+# Install missing plugins that have configured shorthands
 $ mise plugins install --all
 ```
 

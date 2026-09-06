@@ -1770,6 +1770,7 @@ Supports wildcards, e.g. --allow-env='MYAPP_*'
 Allow network to specific host (implies --deny-net for everything else)
 Per-host filtering is unsupported on Linux and returns an error.
 See the sandboxing guide for current macOS host-filter limitations.
+On Windows, sandboxing is unavailable: mise warns and runs without host filtering.
 """# var=#true {
         arg <HOST>
     }
@@ -3006,7 +3007,7 @@ Use this command to install it ahead of time or choose a custom source.
 A Git URL may end in `#ref` to select a plugin commit, tag, or branch. This selects
 the plugin implementation, separately from the tool version installed by `mise use`.
 """#
-        after_long_help "\u{1b}[1m\u{1b}[4mExamples:\u{1b}[22m\u{1b}[24m\n\n    # Install an asdf-compatible plugin from its upstream repository\n    $ \u{1b}[1mmise plugins install postgres https://github.com/smashedtoatoms/asdf-postgres.git\u{1b}[22m\n\n    # Use a local plugin repository at a tag you created\n    $ \u{1b}[1mmise plugins install my-tool file:///path/to/mise-my-tool#v1.0.0\u{1b}[22m\n\n    # Install plugins required by the active configuration\n    $ \u{1b}[1mmise plugins install --all\u{1b}[22m\n"
+        after_long_help "\u{1b}[1m\u{1b}[4mExamples:\u{1b}[22m\u{1b}[24m\n\n    # Install an asdf-compatible plugin from its upstream repository\n    $ \u{1b}[1mmise plugins install postgres https://github.com/smashedtoatoms/asdf-postgres.git\u{1b}[22m\n\n    # Use a local plugin repository at a tag you created\n    $ \u{1b}[1mmise plugins install my-tool file:///path/to/mise-my-tool#v1.0.0\u{1b}[22m\n\n    # Install missing plugins that have configured shorthands\n    $ \u{1b}[1mmise plugins install --all\u{1b}[22m\n"
         flag "-a --all" help=#"""
 Install all missing plugins
 This will only install plugins that have matching shorthands.
@@ -4495,7 +4496,7 @@ Pass `--no-prune` to edit configuration while keeping installations. To remove a
 installation without editing configuration, use `mise uninstall`.
 """#
     after_long_help "\u{1b}[1m\u{1b}[4mExamples:\u{1b}[22m\u{1b}[24m\n\n    # remove node@18.0.0 from mise.toml and uninstall it\n    $ \u{1b}[1mmise unuse node@18.0.0\u{1b}[22m\n\n    # remove it from the global config instead\n    $ \u{1b}[1mmise unuse -g node@18.0.0\u{1b}[22m\n\n    # remove the literal node@20 request from mise.local.toml\n    $ \u{1b}[1mmise unuse --env local node@20\u{1b}[22m\n\n    # remove the literal node@20 request from mise.staging.toml\n    $ \u{1b}[1mmise unuse --env staging node@20\u{1b}[22m\n"
-    flag "-e --env" help="Create/modify an environment-specific config file like .mise.<env>.toml" {
+    flag "-e --env" help="Modify `.mise.<env>.toml` when it exists, otherwise `mise.<env>.toml`" {
         overrides "--global" "--path"
         arg <ENV>
     }

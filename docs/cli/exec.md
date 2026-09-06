@@ -32,6 +32,7 @@ The "--" separates tools from the command to pass along to the subprocess.
 - **`--allow-net <HOST>`** — Allow network to specific host (implies --deny-net for everything else)
   Per-host filtering is unsupported on Linux and returns an error.
   See the sandboxing guide for current macOS host-filter limitations.
+  On Windows, sandboxing is unavailable: mise warns and runs without host filtering.
 - **`--allow-read <PATH>`** — Allow reads from specific path (implies --deny-read for everything else)
 - **`--allow-write <PATH>`** — Allow writes to specific path (implies --deny-write for everything else)
 - **`--deny-all`** — Block reads, writes, network, and env vars

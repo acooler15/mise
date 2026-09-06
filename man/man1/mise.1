@@ -2791,6 +2791,7 @@ Supports wildcards, e.g. \-\-allow\-env='MYAPP_*'
 Allow network to specific host (implies \-\-deny\-net for everything else)
 Per\-host filtering is unsupported on Linux and returns an error.
 See the sandboxing guide for current macOS host\-filter limitations.
+On Windows, sandboxing is unavailable: mise warns and runs without host filtering.
 .TP
 \fB\-\-allow\-read\fR \fI<PATH>\fR
 Allow reads from specific path (implies \-\-deny\-read for everything else)
@@ -6072,7 +6073,7 @@ installation without editing configuration, use `mise uninstall`.
 .PP
 .TP
 \fB\-e, \-\-env\fR \fI<ENV>\fR
-Create/modify an environment\-specific config file like .mise.<env>.toml
+Modify `.mise.<env>.toml` when it exists, otherwise `mise.<env>.toml`
 .TP
 \fB\-g, \-\-global\fR
 Use the global config file (`~/.config/mise/config.toml`) instead of the local one

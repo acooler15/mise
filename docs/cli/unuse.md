@@ -22,7 +22,7 @@ installation without editing configuration, use `mise uninstall`.
 - **`<INSTALLED_TOOL@VERSION>…`** — Tool(s) to remove
 
 ## Flags
-- **`-e --env <ENV>`** — Create/modify an environment-specific config file like .mise.&lt;env>.toml
+- **`-e --env <ENV>`** — Modify `.mise.<env>.toml` when it exists, otherwise `mise.<env>.toml`
 - **`-g --global`** — Use the global config file (`~/.config/mise/config.toml`) instead of the local one
 - **`-p --path <PATH>`** — Specify a path to a config file or directory
 

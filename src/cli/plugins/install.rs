@@ -211,7 +211,7 @@ static AFTER_LONG_HELP: &str = color_print::cstr!(
     # Use a local plugin repository at a tag you created
     $ <bold>mise plugins install my-tool file:///path/to/mise-my-tool#v1.0.0</bold>
 
-    # Install plugins required by the active configuration
+    # Install missing plugins that have configured shorthands
     $ <bold>mise plugins install --all</bold>
 "#
 );
