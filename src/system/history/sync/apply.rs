@@ -26,6 +26,7 @@ use crate::system::history::store::{OperationKind, Summary};
 use crate::system::history::tracked::{TrackedSet, normalize_target};
 use crate::ui::table::MiseTable;
 
+#[derive(Clone, Debug)]
 pub(crate) struct ApplyRequest {
     /// Only these local paths (empty: everything pending).
     pub paths: Vec<PathBuf>,
@@ -35,6 +36,33 @@ pub(crate) struct ApplyRequest {
     pub take_remote: Vec<PathBuf>,
     /// Resolve these conflicts by publishing the local version next.
     pub keep_local: Vec<PathBuf>,
+    /// The watcher applying in the background: no prompt, no plan on
+    /// stdout, and held paths are a count, not a failure.
+    pub automatic: bool,
+}
+
+impl ApplyRequest {
+    pub(crate) fn automatic() -> Self {
+        Self {
+            paths: vec![],
+            dry_run: false,
+            yes: true,
+            take_remote: vec![],
+            keep_local: vec![],
+            automatic: true,
+        }
+    }
+}
+
+/// What an application did.
+#[derive(Debug, Default, Clone)]
+pub(crate) struct ApplyOutcome {
+    /// Files written or removed.
+    pub written: usize,
+    /// Paths held for a decision (with their groups).
+    pub held: usize,
+    /// A configuration file was written: declarations may have changed.
+    pub configuration: bool,
 }
 
 /// Why a pending application is not written now.
@@ -54,7 +82,24 @@ struct Step {
     live: Option<String>,
 }
 
-pub(crate) async fn apply(store: &Store, tracked: &TrackedSet, req: &ApplyRequest) -> Result<()> {
+pub(crate) async fn apply(
+    store: &Store,
+    tracked: &TrackedSet,
+    req: &ApplyRequest,
+) -> Result<ApplyOutcome> {
+    apply_round(store, tracked, req, 1).await
+}
+
+/// How many times an application follows an incoming configuration with
+/// what that configuration declares.
+const FOLLOW_UP_ROUNDS: u32 = 3;
+
+async fn apply_round(
+    store: &Store,
+    tracked: &TrackedSet,
+    req: &ApplyRequest,
+    round: u32,
+) -> Result<ApplyOutcome> {
     let repo = store
         .repo()
         .ok_or_else(|| eyre::eyre!("applying requires git"))?;
@@ -171,8 +216,10 @@ pub(crate) async fn apply(store: &Store, tracked: &TrackedSet, req: &ApplyReques
         });
     }
     if steps.is_empty() {
-        info!("history: nothing to apply");
-        return Ok(());
+        if !req.automatic {
+            info!("history: nothing to apply");
+        }
+        return Ok(ApplyOutcome::default());
     }
 
     // validation and holds, per group
@@ -216,17 +263,27 @@ pub(crate) async fn apply(store: &Store, tracked: &TrackedSet, req: &ApplyReques
             step.group.clone(),
         ]);
     }
-    table.print()?;
+    if !req.automatic {
+        table.print()?;
+    }
     if req.dry_run {
         miseprintln!("history: dry run; nothing was changed");
-        return Ok(());
+        return Ok(ApplyOutcome::default());
     }
     if ready.is_empty() {
+        if req.automatic {
+            return Ok(ApplyOutcome {
+                held: held.len(),
+                ..Default::default()
+            });
+        }
         bail!("nothing can be applied until the held paths are decided");
     }
-    if !super::origin::confirmed(req.yes, "history: apply these incoming changes?")? {
+    if !req.automatic
+        && !super::origin::confirmed(req.yes, "history: apply these incoming changes?")?
+    {
         info!("history: skipped");
-        return Ok(());
+        return Ok(ApplyOutcome::default());
     }
 
     // the transaction
@@ -320,13 +377,48 @@ pub(crate) async fn apply(store: &Store, tracked: &TrackedSet, req: &ApplyReques
     scope.finish(error, Some(summary));
     result?;
     replay::run_reload(&reload, &touched);
-    if ready.iter().any(|step| step.pending.configuration) {
+    let configuration = ready.iter().any(|step| step.pending.configuration);
+    if configuration && !req.automatic {
         info!(
             "history: configuration changed; declarations may differ from the applied setup: run `mise bootstrap --dry-run`"
         );
     }
-    info!("history: applied {} incoming change(s)", touched.len());
-    Ok(())
+    if !req.automatic {
+        info!("history: applied {} incoming change(s)", touched.len());
+    }
+    let mut outcome = ApplyOutcome {
+        written: touched.len(),
+        held: held.len(),
+        configuration,
+    };
+    // the configuration that arrived may declare tracked files whose shared
+    // versions waited for it: reconcile again (no network) and apply them
+    // in the same run, so one pull brings a fresh machine everything
+    if configuration && round < FOLLOW_UP_ROUNDS {
+        crate::config::Config::reset().await?;
+        let tracked = TrackedSet::effective().await?;
+        let mut request = run::SyncRequest::new(false);
+        request.offline = true;
+        request.capture = false;
+        match run::sync(store, &tracked, &request) {
+            Ok(_) => {
+                let follow_up = ApplyRequest {
+                    take_remote: vec![],
+                    keep_local: vec![],
+                    yes: true,
+                    ..req.clone()
+                };
+                let more = Box::pin(apply_round(store, &tracked, &follow_up, round + 1)).await?;
+                outcome.written += more.written;
+                outcome.held = more.held;
+                outcome.configuration |= more.configuration;
+            }
+            Err(err) => warn!(
+                "history: could not check what the applied configuration declares: {err:#}; the next sync does"
+            ),
+        }
+    }
+    Ok(outcome)
 }
 
 /// Why a step must wait: unsaved local edits, git changes in a user

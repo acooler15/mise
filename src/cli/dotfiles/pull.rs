@@ -16,6 +16,11 @@ use crate::system::history::sync::apply::{self, ApplyRequest};
 /// parse, a path with unsaved local edits, staged git changes in your own
 /// checkout, or a genuine local edit is held with its group. Conflicts
 /// are decided per path with `--take-remote` or `--keep-local`.
+///
+/// In `sync` mode the history watcher pulls nonconflicting changes on its
+/// own; this command writes what is pending right now and decides
+/// conflicts. When an incoming configuration declares more tracked files,
+/// their shared versions follow in the same run.
 #[derive(Debug, usage_rs::Args)]
 #[usage(verbatim_doc_comment, after_long_help = AFTER_LONG_HELP)]
 pub(crate) struct DotfilesPull {
@@ -58,9 +63,11 @@ impl DotfilesPull {
                 yes: self.yes,
                 take_remote: self.take_remote.clone(),
                 keep_local: self.keep_local.clone(),
+                automatic: false,
             },
         )
-        .await
+        .await?;
+        Ok(())
     }
 }
 

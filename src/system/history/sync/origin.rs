@@ -227,7 +227,11 @@ pub(crate) async fn set(store: &Store, tracked: &TrackedSet, opts: &SetOptions) 
     if opts.name.is_some() {
         hstore::write_json(&hstore::machine_file_in(state_dir), &machine)?;
     }
-    write_config(&opts.url, &opts.branch, opts.mode)?;
+    // the mode is recorded only when it differs from what the settings
+    // say, so `mise settings set history.sync …` keeps working afterwards
+    let mode =
+        (opts.mode.as_str() != crate::config::Settings::get().history.sync).then_some(opts.mode);
+    write_config(&opts.url, &opts.branch, mode)?;
     let mut status = run::read_status(state_dir);
     // another repository or branch starts from a clean slate: the previous
     // one's per-path state, pending changes, and conflicts would read its
@@ -244,6 +248,7 @@ pub(crate) async fn set(store: &Store, tracked: &TrackedSet, opts: &SetOptions) 
     }
     status.origin_url = Some(opts.url.clone());
     status.origin_branch = Some(opts.branch.clone());
+    status.disconnected = false;
     status.adopted = repo_state == RepoState::Unmarked || status.adopted;
     // from now on: the checkpoint holding the current state (taken above)
     // is included, not only what changes later
@@ -262,7 +267,7 @@ pub(crate) async fn set(store: &Store, tracked: &TrackedSet, opts: &SetOptions) 
         "history: connected {} ({}); [history.origin] written to {}",
         opts.url,
         opts.mode.as_str(),
-        display_path(crate::config::global_shared_config_path())
+        display_path(origin_file()?)
     );
 
     // the first synchronization
@@ -271,13 +276,7 @@ pub(crate) async fn set(store: &Store, tracked: &TrackedSet, opts: &SetOptions) 
     let store = Store::open_in(state_dir)?;
     // the mode just chosen decides, not the settings loaded before it was
     // written: fetch-only connects without publishing anything
-    let outcome = run::sync(
-        &store,
-        &tracked,
-        &SyncRequest {
-            fetch_only: !opts.mode.publishes(),
-        },
-    )?;
+    let outcome = run::sync(&store, &tracked, &SyncRequest::new(!opts.mode.publishes()))?;
     report(&outcome);
     Ok(())
 }
@@ -352,8 +351,17 @@ fn unshared_destinations(shared: &share::ShareReport, tracked: &TrackedSet) -> V
     out
 }
 
-fn write_config(url: &str, branch: &str, mode: SyncMode) -> Result<()> {
-    let global = crate::config::global_shared_config_path();
+/// Where the connection is declared: `config.local.toml` next to the
+/// global configuration. Machine-local, so it is never published (each
+/// machine names the repository the way it reaches it) and a fresh
+/// machine's own declaration never conflicts with the configuration it
+/// pulls.
+fn origin_file() -> Result<PathBuf> {
+    crate::cli::dotfiles::track::declaration_file(true)
+}
+
+fn write_config(url: &str, branch: &str, mode: Option<SyncMode>) -> Result<()> {
+    let global = origin_file()?;
     let mut doc = crate::cli::dotfiles::track::read_document(&global)?;
     let history = doc
         .entry("history")
@@ -374,6 +382,10 @@ fn write_config(url: &str, branch: &str, mode: SyncMode) -> Result<()> {
     origin.set_implicit(false);
     origin.insert("url", Item::Value(Value::from(url)));
     origin.insert("branch", Item::Value(Value::from(branch)));
+    let Some(mode) = mode else {
+        crate::file::write(&global, doc.to_string())?;
+        return Ok(());
+    };
     let settings = doc
         .entry("settings")
         .or_insert(Item::Table(toml_edit::Table::new()));
@@ -418,22 +430,39 @@ fn reset_sync_state(
 /// Disconnects: the declaration is removed; local refs, state, and
 /// checkpoints stay.
 pub(crate) fn remove() -> Result<()> {
-    let global = crate::config::global_shared_config_path();
-    let mut doc = crate::cli::dotfiles::track::read_document(&global)?;
-    let mut removed = false;
-    if let Some(history) = doc.get_mut("history").and_then(Item::as_table_mut) {
-        removed = history.remove("origin").is_some();
+    let mut removed = vec![];
+    // the machine-local file, and the shared one for a declaration written
+    // there by hand or by an earlier mise
+    for file in [origin_file()?, crate::config::global_shared_config_path()] {
+        if !file.exists() {
+            continue;
+        }
+        let mut doc = crate::cli::dotfiles::track::read_document(&file)?;
+        let mut changed = false;
+        if let Some(history) = doc.get_mut("history").and_then(Item::as_table_mut) {
+            changed = history.remove("origin").is_some();
+        }
+        if changed {
+            crate::file::write(&file, doc.to_string())?;
+            removed.push(display_path(&file));
+        }
     }
-    if removed {
-        crate::file::write(&global, doc.to_string())?;
-        info!(
-            "history: disconnected; [history.origin] removed from {} (local checkpoints and fetched refs are kept)",
-            display_path(&global)
-        );
+    // the recorded connection no longer stands in for a declaration
+    let state_dir: &std::path::Path = &crate::dirs::STATE;
+    let mut status = run::read_status(state_dir);
+    if status.origin_url.is_some() && !status.disconnected {
+        status.disconnected = true;
+        run::write_status(state_dir, &status)?;
+        if removed.is_empty() {
+            removed.push("the recorded connection".to_string());
+        }
+    }
+    if removed.is_empty() {
+        info!("history: no setup repository was connected");
     } else {
         info!(
-            "history: no setup repository was connected in {}",
-            display_path(&global)
+            "history: disconnected; [history.origin] removed from {} (local checkpoints and fetched refs are kept)",
+            removed.join(" and ")
         );
     }
     Ok(())
