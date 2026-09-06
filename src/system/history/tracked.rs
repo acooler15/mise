@@ -86,7 +86,7 @@ impl TrackedEntry {
         display_path(&self.path)
     }
 
-    fn new(path: PathBuf, kind: EntryKind, mode: &str, policy: Policy) -> Self {
+    pub(crate) fn new(path: PathBuf, kind: EntryKind, mode: &str, policy: Policy) -> Self {
         Self {
             path,
             kind,
@@ -855,6 +855,17 @@ pub(crate) fn normalize_target(path: &Path) -> PathBuf {
             .join(name);
     }
     dunce::canonicalize(&expanded).unwrap_or_else(|_| lexical(&expanded))
+}
+
+/// Where a symlink points, lexically: the target need not exist.
+pub(crate) fn link_target(link: &Path) -> Option<PathBuf> {
+    let dest = std::fs::read_link(link).ok()?;
+    let joined = if dest.is_absolute() {
+        dest
+    } else {
+        link.parent()?.join(dest)
+    };
+    Some(lexical(&joined))
 }
 
 fn lexical(path: &Path) -> PathBuf {
