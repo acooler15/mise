@@ -17,7 +17,7 @@ Manage dotfiles from `[dotfiles]`
 - [`mise bootstrap dotfiles diff [TARGET]…`](/cli/bootstrap/dotfiles/diff.md)
 - [`mise bootstrap dotfiles edit [FLAGS] <TARGET>`](/cli/bootstrap/dotfiles/edit.md)
 - [`mise bootstrap dotfiles exclude <GLOB>`](/cli/bootstrap/dotfiles/exclude.md)
-- [`mise bootstrap dotfiles history [FLAGS] <SUBCOMMAND>`](/cli/bootstrap/dotfiles/history.md)
+- [`mise bootstrap dotfiles history [FLAGS] [SUBCOMMAND]`](/cli/bootstrap/dotfiles/history.md)
 - [`mise bootstrap dotfiles include <GLOB>`](/cli/bootstrap/dotfiles/include.md)
 - [`mise bootstrap dotfiles paths [FLAGS]`](/cli/bootstrap/dotfiles/paths.md)
 - [`mise bootstrap dotfiles rollback [FLAGS] [PATH]…`](/cli/bootstrap/dotfiles/rollback.md)
