@@ -4534,7 +4534,9 @@ Supports wildcards, e.g. \-\-allow\-env='MYAPP_*'
 .TP
 \fB\-\-allow\-net\fR \fI<HOST>\fR
 Allow network to specific host (implies \-\-deny\-net for everything else)
-Unsupported on Linux; see the sandboxing guide for macOS limitations.
+Per\-host filtering is unsupported on Linux and returns an error.
+See the sandboxing guide for current macOS host\-filter limitations.
+On Windows, sandboxing is unavailable: mise warns and runs without host filtering.
 .TP
 \fB\-\-allow\-read\fR \fI<PATH>\fR
 Allow reads from specific path (implies \-\-deny\-read for everything else)
@@ -5613,7 +5615,9 @@ Supports wildcards, e.g. \-\-allow\-env='MYAPP_*'
 .TP
 \fB\-\-allow\-net\fR \fI<HOST>\fR
 Allow network to specific host (implies \-\-deny\-net for everything else)
-Unsupported on Linux; see the sandboxing guide for macOS limitations.
+Per\-host filtering is unsupported on Linux and returns an error.
+See the sandboxing guide for current macOS host\-filter limitations.
+On Windows, sandboxing is unavailable: mise warns and runs without host filtering.
 .TP
 \fB\-\-allow\-read\fR \fI<PATH>\fR
 Allow reads from specific path (implies \-\-deny\-read for everything else)
