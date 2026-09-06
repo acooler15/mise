@@ -155,7 +155,7 @@
 ## Advanced
 
 - [Architecture](https://mise.jdx.dev/architecture.html): This document gives an overview of mise's architecture. It is aimed at contributors and anyone interested in how mise works internally.
-- [Paranoid](https://mise.jdx.dev/paranoid.html): Paranoid mode requires explicit trust for non-global configuration and rechecks supported provenance during installation. Use it when you want configuration edits to require renewed approval.
+- [Paranoid](https://mise.jdx.dev/paranoid.html): Paranoid mode requires explicit content-bound trust for non-global configuration and rechecks supported provenance during installation.
 - [Templates](https://mise.jdx.dev/templates.html): Use Tera expressions to derive configuration values from the project directory, environment, or [vars]. mise renders those expressions when it resolves configuration or prepares a task.
 - [URL Replacements](https://mise.jdx.dev/url-replacements.html): Use url_replacements to route requests made by mise's HTTP client through an internal mirror or proxy. This can cover release metadata and artifact downloads, including Conda channel metadata.
 - [Model Context Protocol](https://mise.jdx.dev/mcp.html): The Model Context Protocol (MCP) is a standard protocol that enables AI assistants to interact with development tools and access project context.
